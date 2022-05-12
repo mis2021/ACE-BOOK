@@ -1,5 +1,5 @@
 export const ROUTES = {
-  HOME: '/grocery',
+  HOME: '/',
   CHECKOUT: '/checkout',
   CHECKOUT_DIGITAL: '/checkout/digital',
   GUEST_CHECKOUT: '/checkout/guest',
@@ -22,5 +22,6 @@ export const ROUTES = {
   MANUFACTURERS: '/manufacturers',
   SEARCH: '/search',
 
+  LOGIN: "/login",
   TODO: '/testings/todo',
 };

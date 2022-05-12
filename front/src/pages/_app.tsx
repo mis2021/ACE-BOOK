@@ -25,7 +25,11 @@ function CustomApp({
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page);
   const authenticationRequired = Component.authenticationRequired ?? false;
+  const authProps = (Component as any).authenticate ;
+  // const authProps = (Component as any).authenticate;
 
+  console.log('authProps', authProps);
+  console.log('getLayout', getLayout);
   return (
     <SessionProvider session={session}>
       <QueryProvider pageProps={pageProps}>
@@ -34,8 +38,8 @@ function CustomApp({
             <CartProvider>
               <>
                 <DefaultSeo />
-                {authenticationRequired ? (
-                  <PrivateRoute>
+                {authProps ? (
+                  <PrivateRoute authProps={authProps}>
                     {getLayout(<Component {...pageProps} />)}
                   </PrivateRoute>
                 ) : (

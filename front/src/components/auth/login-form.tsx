@@ -1,140 +1,134 @@
-import { signIn } from 'next-auth/react';
-import Logo from '@/components/ui/logo';
+// import Alert from "@components/ui/alert";
+// import Button from "@components/ui/button";
+// import Input from "@components/ui/input";
+// import PasswordInput from "@components/ui/password-input";
+// import { useLoginMutation } from "@graphql/auth.graphql";
+import PasswordInput from '@/components/ui/forms/password-input';
 import Alert from '@/components/ui/alert';
 import Input from '@/components/ui/forms/input';
-import PasswordInput from '@/components/ui/forms/password-input';
-import Button from '@/components/ui/button';
-import { useTranslation } from 'next-i18next';
-import * as yup from 'yup';
-import { GoogleIcon } from '@/components/icons/google';
-import { useModalAction } from '@/components/ui/modal/modal.context';
-import { MobileIcon } from '@/components/icons/mobile-icon';
-import { Form } from '@/components/ui/forms/form';
-import { useLogin } from '@/framework/user';
-import type { LoginUserInput } from '@/types';
-import { AnonymousIcon } from '@/components/icons/anonymous-icon';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useApolloClient } from '@apollo/client';
+// import { ROUTES } from "@utils/routes";
+import { useTranslation } from 'next-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+// import { allowedRoles, hasAccess, setAuthCredentials } from "@utils/auth-utils";
+// import Link from "@components/ui/link";
+import Logo from '../ui/logo';
+import { useLoginMutation } from 'graphql/auth.graphql';
+import {
+  allowedRoles,
+  hasAccess,
+  setAuthCredentials,
+} from '@/utils/auth-utils';
+import Button from '@/components/ui/button';
 import { ROUTES } from '@/lib/routes';
 
+type FormValues = {
+  username: string;
+  password: string;
+};
 const loginFormSchema = yup.object().shape({
-  email: yup
+  username: yup
     .string()
-    .email('error-email-format')
-    .required('error-email-required'),
-  password: yup.string().required('error-password-required'),
+    // .email("form:error-email-format")
+    .required('form:error-email-required'),
+  password: yup.string().required('form:error-password-required'),
 });
-function LoginForm() {
-  const { t } = useTranslation('common');
-  const router = useRouter();
-  const { openModal } = useModalAction();
-  const isCheckout = router.pathname.includes('checkout');
-  const { mutate: login, isLoading, serverError, setServerError } = useLogin();
+const LoginForm = () => {
+  const client = useApolloClient();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [login, { loading }] = useLoginMutation({
+    onCompleted: (data) => {
+      if (data.login?.token) {
+        if (hasAccess(allowedRoles, data.login.permissions)) {
+          setAuthCredentials(data.login.token, data.login.permissions);
+          router.push(ROUTES.HOME);
+          return;
+        }
+        setErrorMessage('Premission Issues');
+      } else {
+        setErrorMessage('Credential Issues');
+      }
+    },
+  });
 
-  function onSubmit({ email, password }: LoginUserInput) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: yupResolver(loginFormSchema),
+  });
+  const router = useRouter();
+  const { t } = useTranslation('common');
+
+  function onSubmit({ username, password }: FormValues) {
+    client.resetStore();
     login({
-      email,
-      password,
+      variables: {
+        username,
+        password,
+      },
     });
   }
-
   return (
     <>
-      <Alert
-        variant="error"
-        message={serverError && t(serverError)}
-        className="mb-6"
-        closeable={true}
-        onClose={() => setServerError(null)}
-      />
-      <Form<LoginUserInput>
-        onSubmit={onSubmit}
-        validationSchema={loginFormSchema}
-      >
-        {({ register, formState: { errors } }) => (
-          <>
-            <Input
-              label={t('text-email')}
-              {...register('email')}
-              type="email"
-              variant="outline"
-              className="mb-5"
-              error={t(errors.email?.message!)}
-            />
-            <PasswordInput
-              label={t('text-password')}
-              {...register('password')}
-              error={t(errors.password?.message!)}
-              variant="outline"
-              className="mb-5"
-              forgotPageRouteOnClick={() => openModal('FORGOT_VIEW')}
-            />
-            <div className="mt-8">
-              <Button
-                className="h-11 w-full sm:h-12"
-                loading={isLoading}
-                disabled={isLoading}
-              >
-                {t('text-login')}
-              </Button>
-            </div>
-          </>
-        )}
-      </Form>
-      {/* //===============// */}
-      <div className="relative mt-8 mb-6 flex flex-col items-center justify-center text-sm text-heading sm:mt-11 sm:mb-8">
-        <hr className="w-full" />
-        <span className="absolute -top-2.5 bg-light px-2 ltr:left-2/4 ltr:-ml-4 rtl:right-2/4 rtl:-mr-4">
-          {t('text-or')}
-        </span>
-      </div>
-      <div className="mt-2 grid grid-cols-1 gap-4">
-        <Button
-          className="!bg-social-google !text-light hover:!bg-social-google-hover"
-          disabled={isLoading}
-          onClick={() => {
-            signIn('google');
-          }}
-        >
-          <GoogleIcon className="h-4 w-4 ltr:mr-3 rtl:ml-3" />
-          {t('text-login-google')}
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <Input
+          label={t('Username')}
+          {...register('username')}
+          type="text"
+          // type="email"
+          variant="outline"
+          className="mb-4"
+          // error={t(errors?.email?.message!)}
+        />
+        <PasswordInput
+          label={t('text-password')}
+          // forgotPassHelpText={t("form:input-forgot-password-label")}
+          {...register('password')}
+          error={t(errors?.password?.message!)}
+          variant="outline"
+          className="mb-4"
+          // forgotPageLink={ROUTES.FORGET_PASSWORD}
+        />
+        <Button className="w-full" loading={loading} disabled={loading}>
+          {t('text-login')}
         </Button>
 
-        <Button
-          className="h-11 w-full !bg-gray-500 !text-light hover:!bg-gray-600 sm:h-12"
-          disabled={isLoading}
-          onClick={() => openModal('OTP_LOGIN')}
-        >
-          <MobileIcon className="h-5 text-light ltr:mr-2 rtl:ml-2" />
-          {t('text-login-mobile')}
-        </Button>
+        {/* <div className="flex flex-col items-center justify-center relative text-sm text-heading mt-8 sm:mt-11 mb-6 sm:mb-8">
+          <hr className="w-full" />
+          <span className="absolute start-2/4 -top-2.5 px-2 -ms-4 bg-light">
+            {t("common:text-or")}
+          </span>
+        </div> */}
 
-        {isCheckout && (
-          <Button
-            className="h-11 w-full !bg-pink-700 !text-light hover:!bg-pink-800 sm:h-12"
-            disabled={isLoading}
-            onClick={() => router.push(`${ROUTES.CHECKOUT}/guest`)}
+        {/* <div className="text-sm sm:text-base text-body text-center">
+          {t("form:text-no-account")}{" "}
+          <Link
+            href={ROUTES.REGISTER}
+            className="ms-1 underline text-accent font-semibold transition-colors duration-200 focus:outline-none hover:text-accent-hover focus:text-accent-700 hover:no-underline focus:no-underline"
           >
-            <AnonymousIcon className="h-6 text-light ltr:mr-2 rtl:ml-2" />
-            {t('text-guest-checkout')}
-          </Button>
-        )}
-      </div>
-      <div className="relative mt-8 mb-6 flex flex-col items-center justify-center text-sm text-heading sm:mt-11 sm:mb-8">
-        <hr className="w-full" />
-      </div>
-      <div className="text-center text-sm text-body sm:text-base">
-        {t('text-no-account')}{' '}
-        <button
-          onClick={() => openModal('REGISTER')}
-          className="font-semibold text-accent underline transition-colors duration-200 hover:text-accent-hover hover:no-underline focus:text-accent-hover focus:no-underline focus:outline-none ltr:ml-1 rtl:mr-1"
-        >
-          {t('text-register')}
-        </button>
-      </div>
+            {t("form:link-register-shop-owner")}
+          </Link>
+        </div> */}
+
+        {errorMessage ? (
+          <Alert
+            message={t(errorMessage)}
+            variant="error"
+            closeable={true}
+            className="mt-5"
+            onClose={() => setErrorMessage(null)}
+          />
+        ) : null}
+      </form>
     </>
   );
-}
-
+};
 export default function LoginView() {
   const { t } = useTranslation('common');
   return (

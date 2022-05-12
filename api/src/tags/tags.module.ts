@@ -6,3 +6,4 @@ import { TagsResolver } from './tags.resolver';
   providers: [TagsResolver, TagsService]
 })
 export class TagsModule {}
+

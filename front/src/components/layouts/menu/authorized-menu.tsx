@@ -8,6 +8,7 @@ import cn from 'classnames';
 import { avatarPlaceholder } from '@/lib/placeholders';
 import { UserOutlinedIcon } from '@/components/icons/user-outlined';
 import { useLogout, useUser } from '@/framework/user';
+import { ROUTES } from '@/lib/routes';
 
 const AuthorizedMenu: React.FC<{ minimal?: boolean }> = ({ minimal }) => {
   const { mutate: logout } = useLogout();
@@ -18,6 +19,7 @@ const AuthorizedMenu: React.FC<{ minimal?: boolean }> = ({ minimal }) => {
   function handleClick(path: string) {
     router.push(path);
   }
+
 
   return (
     <Menu
@@ -81,7 +83,8 @@ const AuthorizedMenu: React.FC<{ minimal?: boolean }> = ({ minimal }) => {
           <Menu.Item>
             <li>
               <button
-                onClick={() => logout()}
+                onClick={() => router.replace(ROUTES.LOGOUT)}
+                // onClick={() => logout()}
                 className={cn(
                   'block w-full py-2.5 px-6 text-sm font-semibold capitalize text-heading transition duration-200 hover:text-accent focus:outline-none ltr:text-left rtl:text-right'
                 )}

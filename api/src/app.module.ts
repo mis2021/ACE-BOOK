@@ -22,6 +22,7 @@ import { WalletsModule } from './wallets/wallets.module';
 import { RefundsModule } from './refunds/refunds.module';
 import { AuthorsModule } from './authors/authors.module';
 import { ManufacturersModule } from './manufacturers/manufacturers.module';
+import { MuserModule } from './musers/musers.modules';
 
 @Module({
   imports: [
@@ -50,6 +51,8 @@ import { ManufacturersModule } from './manufacturers/manufacturers.module';
     RefundsModule,
     AuthorsModule,
     ManufacturersModule,
+    
+    MuserModule
   ],
   controllers: [],
   providers: [],

@@ -7,6 +7,8 @@ import MobileNavigation from './mobile-navigation';
 import Footer from './footer';
 import { SearchIcon } from '@/components/icons/search-icon';
 import { displayMobileHeaderSearchAtom } from '@/store/display-mobile-header-search-atom';
+import { adminOnly } from '@/utils/auth-utils';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export default function HomeLayout({
   children,
@@ -38,3 +40,7 @@ export default function HomeLayout({
     </div>
   );
 }
+
+HomeLayout.authenticate = {
+  permissions: adminOnly,
+};

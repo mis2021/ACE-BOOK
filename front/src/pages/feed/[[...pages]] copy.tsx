@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { scroller } from 'react-scroll';
 import { getStaticPaths, getStaticProps } from '@/framework/home-pages.ssr';
 import { InferGetStaticPropsType } from 'next';
+import { adminOnly } from '@/utils/auth-utils';
 export { getStaticPaths, getStaticProps };
 const CartCounterButton = dynamic(
   () => import('@/components/cart/cart-counter-button'),
@@ -55,8 +56,11 @@ const Home: NextPageWithLayout<
   );
 };
 
+
 Home.getLayout = function getLayout(page) {
   return <HomeLayout layout={page.props.layout}>{page}</HomeLayout>;
 };
 
 export default Home;
+
+

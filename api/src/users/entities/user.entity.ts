@@ -12,6 +12,7 @@ import { Profile } from './profile.entity';
 export class User extends CoreEntity {
   name: string;
   email: string;
+  username: string;
   password?: string;
   shop_id?: number;
   profile?: Profile;

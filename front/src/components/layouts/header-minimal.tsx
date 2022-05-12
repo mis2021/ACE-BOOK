@@ -98,7 +98,8 @@ const HeaderMinimal = ({ layout }: { layout: string }) => {
             >
               {t('text-become-seller')}
             </Link>
-            {isAuthorize ? <AuthorizedMenu minimal={true} /> : <JoinButton />}
+            <AuthorizedMenu minimal={true} />
+            {/* {isAuthorize ? <AuthorizedMenu minimal={true} /> : <JoinButton />} */}
           </div>
         </div>
       </div>

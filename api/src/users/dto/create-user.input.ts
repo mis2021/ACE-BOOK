@@ -25,7 +25,7 @@ export class RegisterInput extends PickType(User, [
 
 @InputType()
 export class LoginInput extends PartialType(
-  PickType(User, ['email', 'password']),
+  PickType(User, ['username', 'password']),
 ) {}
 
 @InputType()

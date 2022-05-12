@@ -3,6 +3,7 @@ import type { ReactElement, ReactNode } from 'react';
 
 export type NextPageWithLayout<P = {}> = NextPage<P> & {
   authenticationRequired?: boolean;
+  authenticate?: {};
   getLayout?: (page: ReactElement) => ReactNode;
 };
 

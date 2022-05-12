@@ -79,7 +79,8 @@ const Header = ({ layout }: { layout: string }) => {
             >
               {t('text-become-seller')}
             </a>
-            <li>{isAuthorize ? <AuthorizedMenu /> : <JoinButton />}</li>
+            <AuthorizedMenu />
+            {/* <li>{isAuthorize ? <AuthorizedMenu /> : <JoinButton />}</li> */}
           </div>
         </ul>
       </div>

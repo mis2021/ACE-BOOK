@@ -7,7 +7,7 @@ const headerLinks = [
   { href: ROUTES.OFFERS, icon: null, label: 'nav-menu-offer' },
   { href: ROUTES.HELP, label: 'nav-menu-faq' },
   { href: ROUTES.CONTACT, label: 'nav-menu-contact' },
-  { href: ROUTES.TODO, label: 'nav-menu-todo' },
+  { href: ROUTES.TODO, label: 'nav-menu-todo' }
 ];
 
 const StaticMenu = () => {
