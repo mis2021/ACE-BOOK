@@ -10,3 +10,15 @@ export class CoreEntity {
   @Type(() => Date)
   updated_at: Date;
 }
+
+
+
+@ObjectType()
+export class CoreEntityMg {
+  @Field(() => ID,{ nullable: true })
+  _id: String;
+  @Type(() => Date)
+  created_at: Date;
+  @Type(() => Date)
+  updated_at: Date;
+}

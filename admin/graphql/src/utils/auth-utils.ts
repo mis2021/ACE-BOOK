@@ -56,4 +56,10 @@ export function isAuthenticated(_cookies: any) {
     Array.isArray(_cookies[PERMISSIONS]) &&
     !!_cookies[PERMISSIONS].length
   );
+  
+  // return (
+  //   !!_cookies[TOKEN] &&
+  //   Array.isArray(_cookies[PERMISSIONS]) &&
+  //   !!_cookies[PERMISSIONS].length
+  // );
 }

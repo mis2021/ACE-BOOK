@@ -69,16 +69,16 @@ const Header = ({ layout }: { layout: string }) => {
           </>
         ) : null}
         <ul className="items-center shrink-0 hidden lg:flex space-x-10 rtl:space-x-reverse">
-          <StaticMenu />
+          {/* <StaticMenu /> */}
           <div className="flex items-center space-x-4 rtl:space-x-reverse">
-            <a
+            {/* <a
               href={`${process.env.NEXT_PUBLIC_ADMIN_URL}/register`}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center justify-center shrink-0 px-3 py-0 text-sm font-semibold leading-none transition duration-300 ease-in-out border border-transparent rounded outline-none h-9 bg-accent text-light hover:bg-accent-hover focus:outline-none focus:shadow focus:ring-1 focus:ring-accent-700"
             >
               {t('text-become-seller')}
-            </a>
+            </a> */}
             <AuthorizedMenu />
             {/* <li>{isAuthorize ? <AuthorizedMenu /> : <JoinButton />}</li> */}
           </div>

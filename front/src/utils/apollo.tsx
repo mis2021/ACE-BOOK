@@ -48,12 +48,26 @@ function createApolloClient() {
   });
 
   return new ApolloClient({
+    // ssrMode: true,
     ssrMode: typeof window === "undefined",
     //@ts-ignore
     link: from([authLink, errorLink, httpLink]),
     cache: new InMemoryCache(),
   });
+
+  // return new ApolloClient({
+  //   ssrMode: typeof window === "undefined",
+  //   //@ts-ignore
+  //   link: from([authLink, errorLink, httpLink]),
+  //   cache: new InMemoryCache(),
+  // });
+
+
+
+
+
 }
+
 
 export function initializeApollo(initialState: any = null) {
   const _apolloClient = apolloClient ?? createApolloClient();

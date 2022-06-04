@@ -4,6 +4,7 @@ import { Category } from '@/framework/types';
 import TreeMenu from '@/components/ui/tree-menu';
 import CategoriesLoader from '@/components/ui/loaders/categories-loader';
 import { isMobile } from 'react-device-detect';
+import {ACEBOOK_MENU} from '@/constants/menu'
 
 interface StickySidebarListCategoriesProps {
   notFound: boolean;
@@ -11,6 +12,8 @@ interface StickySidebarListCategoriesProps {
   categories: Category[];
   className?: string;
 }
+
+
 
 const StickySidebarListCategories: React.FC<
   StickySidebarListCategoriesProps
@@ -24,6 +27,7 @@ const StickySidebarListCategories: React.FC<
       </div>
     );
   }
+ const menu = ACEBOOK_MENU;
   return (
     <aside
       className={`lg:sticky lg:top-22 h-full xl:w-72 hidden xl:block bg-light ${className}`}
@@ -36,7 +40,8 @@ const StickySidebarListCategories: React.FC<
           >
             {!notFound ? (
               <div className="px-5">
-                <TreeMenu items={categories} className="xl:py-8" />
+                <TreeMenu items={menu} className="xl:py-8" />
+                {/* <TreeMenu items={categories} className="xl:py-8" /> */}
               </div>
             ) : (
               <div className="min-h-full w-full pt-6 pb-8 px-9 lg:p-8">
@@ -51,7 +56,8 @@ const StickySidebarListCategories: React.FC<
         <div className="max-h-full overflow-hidden flex-grow">
           {!notFound ? (
             <div className="px-5">
-              <TreeMenu items={categories} className="xl:py-8" />
+              <TreeMenu items={menu} className="xl:py-8" />
+              {/* <TreeMenu items={categories} className="xl:py-8" /> */}
             </div>
           ) : (
             <div className="min-h-full w-full pt-6 pb-8 px-9 lg:p-8">

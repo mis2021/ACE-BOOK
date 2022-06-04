@@ -24,4 +24,5 @@ export const ROUTES = {
 
   LOGIN: "/login",
   TODO: '/testings/todo',
+  DEPARTMENT: '/departments',
 };

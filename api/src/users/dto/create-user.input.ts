@@ -5,7 +5,7 @@ import {
   PickType,
   registerEnumType,
 } from '@nestjs/graphql';
-import { User } from '../entities/user.entity';
+import { User, UserEntAB, UserEntABInput } from '../entities/user.entity';
 
 enum Permission {
   SUPER_ADMIN = 'Super admin',
@@ -15,10 +15,24 @@ enum Permission {
 }
 registerEnumType(Permission, { name: 'Permission' });
 @InputType()
-export class RegisterInput extends PickType(User, [
-  'name',
+export class RegisterInput extends PickType(UserEntABInput, [
+// export class RegisterInput extends PickType(User, [
+  '_id',
   'email',
   'password',
+  'suffix',
+  'username',
+  'firstName',
+  'middleName',
+  'lastName',
+  'position',
+  'isActive',
+  'isApprover',
+  'contact',
+  'token',
+  'departmentOnDuty',
+  'department',
+  'restrictionCode',
 ]) {
   permission: Permission = Permission.CUSTOMER;
 }
@@ -59,6 +73,13 @@ export class AuthResponse {
   token: string;
   permissions: string[];
 }
+
+@ObjectType()
+export class UserRegResponse {
+  _id: string;
+  username: string;
+}
+
 @ObjectType()
 export class PasswordChangeResponse {
   success: boolean;

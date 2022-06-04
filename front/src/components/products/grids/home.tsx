@@ -24,17 +24,17 @@ export default function ProductGridHome({
     });
 
   return (
-    <Grid
-      products={products}
-      loadMore={loadMore}
-      isLoading={isLoading}
-      isLoadingMore={isLoadingMore}
-      hasMore={hasMore}
-      error={error}
-      limit={PRODUCTS_PER_PAGE}
-      className={className}
-      gridClassName={gridClassName}
-      column={column}
-    />
+      <Grid
+        products={products}
+        loadMore={loadMore}
+        isLoading={isLoading}
+        isLoadingMore={isLoadingMore}
+        hasMore={hasMore}
+        error={error}
+        limit={PRODUCTS_PER_PAGE}
+        className={className}
+        gridClassName={gridClassName}
+        column={column}
+      />
   );
 }

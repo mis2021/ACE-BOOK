@@ -24,10 +24,15 @@ export const siteSettings = {
     },
   },
   authorizedLinks: [
-    { href: ROUTES.PROFILE, label: 'auth-menu-profile' },
-    { href: ROUTES.ORDERS, label: 'auth-menu-my-orders' },
-    { href: ROUTES.CHECKOUT, label: 'auth-menu-checkout' },
+    { href: ROUTES.PROFILE, label: 'Profile' },
+    { href: ROUTES.ORDERS, label: 'Orders' },
+    { href: ROUTES.CHECKOUT, label: 'Checkout' },
   ],
+  // authorizedLinks: [
+  //   { href: ROUTES.PROFILE, label: 'auth-menu-profile' },
+  //   { href: ROUTES.ORDERS, label: 'auth-menu-my-orders' },
+  //   { href: ROUTES.CHECKOUT, label: 'auth-menu-checkout' },
+  // ],
   authorizedLinksMobile: [
     { href: ROUTES.PROFILE, label: 'auth-menu-profile' },
     { href: ROUTES.ORDERS, label: 'auth-menu-my-orders' },

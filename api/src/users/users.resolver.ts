@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args, ID } from '@nestjs/graphql';
 import { UsersService } from './users.service';
-import Muser from '../../models/User';
+import MUser from '../../models/User';
 import { User } from './entities/user.entity';
 import {
   AuthResponse,
@@ -14,36 +14,35 @@ import {
   RegisterInput,
   ResetPasswordInput,
   SocialLoginInput,
+  UserRegResponse,
   VerifyForgetPasswordTokenInput,
   VerifyOtpInput,
 } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { GetUserArgs } from './dto/get-user.args';
-import { GetUsersArgs, UserPaginator } from './dto/get-users.args';
+import { AccountPaginator, GetAccArgs, GetUsersArgs, UserPaginator } from './dto/get-users.args';
 import { SuccessResponse } from 'src/common/dto/success-response.model';
 import { ProfileInput } from './dto/create-profile.input';
 import { Profile } from './entities/profile.entity';
 import { UpdateProfileArgs } from './dto/update-profile.args';
 import { MakeOrRevokeAdminInput } from './dto/make-revoke-admin.input';
 import bcrypt from 'bcryptjs';
+import { PaginationArgs } from 'src/common/dto/pagination.args';
 
 @Resolver(() => User)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
-  @Mutation(() => AuthResponse)
+  @Mutation(() => UserRegResponse)
   async register(
-    @Args('input') createUserInput: RegisterInput,
-  ): Promise<AuthResponse> {
-
-    const newUser = new Muser({
-      username: createUserInput.name,
-      email:createUserInput.email,
-      password: await bcrypt.hash(createUserInput.password, 10) ,
-    });
-    await newUser.save();
-
-    return this.usersService.register(createUserInput);
+    @Args('input') upsertInput: RegisterInput,
+  ): Promise<UserRegResponse> {
+    if(upsertInput._id){
+      return this.usersService.updateMUser(upsertInput);
+    }else{
+      return this.usersService.register(upsertInput);
+    }
+   
   }
 
   @Mutation(() => AuthResponse)
@@ -149,9 +148,14 @@ export class UsersResolver {
     return this.usersService.getUser(getUserArgs);
   }
 
-  @Mutation(() => User)
-  updateUser(@Args('input') updateUserInput: UpdateUserInput) {
-    return this.usersService.updateUser(updateUserInput.id, updateUserInput);
+  @Mutation(() => UserRegResponse)
+  updateUser(@Args('input') updateUserInput: RegisterInput,
+  ): Promise<UserRegResponse> {
+  // updateUser(@Args('input') updateUserInput: UpdateUserInput) {
+    
+    
+    return this.usersService.updateMUser(updateUserInput);
+    // return this.usersService.updateUser(updateUserInput.id, updateUserInput);
   }
 
   @Mutation(() => User)
@@ -198,5 +202,12 @@ export class UsersResolver {
     @Args('email', { type: () => String }) email: string,
   ) {
     return this.usersService.subscribeToNewsletter(email);
+  }
+
+  // CUSTOM //
+
+  @Query(() => AccountPaginator, { name: 'accounts' })
+  getTags(@Args() getArgs: GetAccArgs) {
+    return this.usersService.findAll(getArgs);
   }
 }

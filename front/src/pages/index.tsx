@@ -48,23 +48,11 @@ IndexPage.getLayout = function getLayout(page : ReactElement) {
   return <HomeLayout layout={"classic"}>{page}</HomeLayout>;
 };
 
-// LoginPage.getLayout = getLayout;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  // export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const { locale } = ctx;
   const { token, permissions } = getAuthCredentials(ctx);
-  // return {
-  //   redirect: {
-  //     destination: ROUTES.LOGIN,
-  //     permanent: false,
-  //   },
-  // };
-  // return {
-  //   props: {
-  //     ...(await serverSideTranslations(locale!, ['common', 'faq'])),
-  //   },
-  // };
+  
 
   if (
     !isAuthenticated({ token, permissions }) ||

@@ -37,15 +37,16 @@ export default function MobileNavigation({
   }
 
   return (
-    <div className="visible h-12 lg:hidden md:h-14">
-      <nav className="h-12 md:h-14 w-full py-1.5 px-2 flex justify-between fixed ltr:left-0 rtl:right-0 bottom-0 z-10 bg-light shadow-400">
+    <div className="visible h-12 md:h-14 lg:hidden">
+      <nav className="fixed bottom-0 z-10 flex h-12 w-full justify-between bg-light py-1.5 px-2 shadow-400 ltr:left-0 rtl:right-0 md:h-14">
         <motion.button
           whileTap={{ scale: 0.88 }}
-          onClick={() => handleSidebar('MAIN_MENU_VIEW')}
-          className="flex items-center justify-center h-full p-2 focus:outline-none focus:text-accent"
+          onClick={() => handleSidebar('FILTER_VIEW')}
+          // onClick={() => handleSidebar('MAIN_MENU_VIEW')}
+          className="flex h-full items-center justify-center p-2 focus:text-accent focus:outline-none"
         >
           <span className="sr-only">{t('text-burger-menu')}</span>
-          <NavbarIcon className={`${isRTL && 'transform rotate-180'}`} />
+          <NavbarIcon className={`${isRTL && 'rotate-180 transform'}`} />
         </motion.button>
 
         {children}
@@ -53,7 +54,7 @@ export default function MobileNavigation({
         <motion.button
           whileTap={{ scale: 0.88 }}
           onClick={() => router.push('/')}
-          className="flex items-center justify-center h-full p-2 focus:outline-none focus:text-accent"
+          className="flex h-full items-center justify-center p-2 focus:text-accent focus:outline-none"
         >
           <span className="sr-only">{t('text-home')}</span>
           <HomeIcon />
@@ -62,22 +63,33 @@ export default function MobileNavigation({
         <motion.button
           whileTap={{ scale: 0.88 }}
           onClick={() => handleSidebar('cart')}
-          className="relative flex items-center justify-center h-full p-2 product-cart focus:outline-none focus:text-accent"
+          className="product-cart relative flex h-full items-center justify-center p-2 focus:text-accent focus:outline-none"
         >
           <span className="sr-only">{t('text-cart')}</span>
           <ShoppingBagIcon />
           {totalUniqueItems > 0 && (
-            <span className="bg-accent py-1 px-1.5 text-10px leading-none font-semibold text-light rounded-full absolute top-0 ltr:right-0 rtl:left-0 mt-0.5 ltr:-mr-0.5 rtl:-ml-0.5">
+            <span className="absolute top-0 mt-0.5 rounded-full bg-accent py-1 px-1.5 text-10px font-semibold leading-none text-light ltr:right-0 ltr:-mr-0.5 rtl:left-0 rtl:-ml-0.5">
               {totalUniqueItems}
             </span>
           )}
         </motion.button>
 
-        {isAuthorize ? (
+      
           <motion.button
             whileTap={{ scale: 0.88 }}
             onClick={() => handleSidebar('AUTH_MENU_VIEW')}
-            className="flex items-center justify-center h-full p-2 focus:outline-none focus:text-accent"
+            className="flex h-full items-center justify-center p-2 focus:text-accent focus:outline-none"
+          >
+            <span className="sr-only">{t('text-user')}</span>
+            <UserIcon />
+          </motion.button>
+      
+
+        {/* {isAuthorize ? (
+          <motion.button
+            whileTap={{ scale: 0.88 }}
+            onClick={() => handleSidebar('AUTH_MENU_VIEW')}
+            className="flex h-full items-center justify-center p-2 focus:text-accent focus:outline-none"
           >
             <span className="sr-only">{t('text-user')}</span>
             <UserIcon />
@@ -86,12 +98,12 @@ export default function MobileNavigation({
           <motion.button
             whileTap={{ scale: 0.88 }}
             onClick={handleJoin}
-            className="flex items-center justify-center h-full p-2 focus:outline-none focus:text-accent"
+            className="flex h-full items-center justify-center p-2 focus:text-accent focus:outline-none"
           >
             <span className="sr-only">{t('text-user')}</span>
             <UserIcon />
           </motion.button>
-        )}
+        )} */}
       </nav>
     </div>
   );

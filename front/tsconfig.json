@@ -17,6 +17,9 @@
     "jsx": "preserve",
     "paths": {
       "@/*": ["src/*"],
+      "@admin/*": ["src/components/admin/*"],
+      "@graphql/*": ["graphql/*"],
+      "@utils/*": ["src/utils/*"],
       "@/framework/*": ["src/framework/graphql/*"],
       "@/framework/static/*": ["src/framework/static/*"]
     },

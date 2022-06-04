@@ -116,6 +116,8 @@ const TagList = ({ tags, onPagination, refetch }: IProps) => {
     },
   ];
 
+  console.log("data", data)
+
   return (
     <>
       <div className="rounded overflow-hidden shadow mb-6">

@@ -693,3 +693,183 @@ body[dir='rtl'] .react-tel-input .country-list .flag {
   border-color: rgb(var(--color-gray-900));
   box-shadow: 0px 0px 0px 3px #ffffff inset, 0 0 0 5px #d1d5db;
 }
+
+/* Check Box */
+.pb-checkbox {
+  position: absolute;
+  opacity: 0;
+}
+
+.pb-checkbox + label {
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pb-checkbox + label:before {
+  content: "";
+  margin-right: 10px;
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  background-color: #ffffff;
+  border: 1px solid rgb(var(--color-gray-300));
+}
+
+.pb-checkbox:focus + label:before {
+  border-color: rgb(var(--color-accent));
+}
+
+.pb-checkbox:checked + label:before {
+  background-color: rgb(var(--color-accent));
+  border-color: rgb(var(--color-accent));
+}
+
+.pb-checkbox:disabled + label {
+  color: rgb(var(--text-base));
+  cursor: auto;
+}
+
+.pb-checkbox:disabled + label:before {
+  box-shadow: none;
+  background: rgb(var(--color-gray-300));
+  border-color: rgb(var(--color-gray-400));
+  cursor: not-allowed;
+}
+
+.pb-checkbox:checked + label:after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  /* top: 9px; */
+  top: 50%;
+  margin-top: -1px;
+  background: #ffffff;
+  width: 2px;
+  height: 2px;
+  box-shadow: 2px 0 0 #ffffff, 4px 0 0 #ffffff, 4px -2px 0 #ffffff,
+    4px -4px 0 #ffffff, 4px -6px 0 #ffffff, 4px -8px 0 #ffffff;
+  transform: rotate(45deg);
+}
+
+/*
+* RC Pagination
+*/
+.rc-pagination {
+  @apply flex items-center flex-wrap;
+}
+/*
+group
+*/
+.rc-pagination .rc-pagination-item,
+.rc-pagination .rc-pagination-prev,
+.rc-pagination .rc-pagination-next,
+.rc-pagination.rc-pagination-simple .rc-pagination-prev,
+.rc-pagination.rc-pagination-simple .rc-pagination-next {
+  @apply w-8 h-8 me-2 mt-2 flex items-center justify-center rounded border border-border-base bg-gray-50 hover:border-accent  hover:text-accent focus:border-accent focus:text-accent;
+  /* @apply w-8 h-8 me-2 mt-2 flex items-center justify-center rounded border border-border-base bg-gray-50 hover:border-accent  hover:text-accent focus:border-accent focus:text-accent; */
+}
+
+.rc-pagination .rc-pagination-prev.rc-pagination-disabled,
+.rc-pagination .rc-pagination-next.rc-pagination-disabled {
+  @apply text-muted hover:text-muted hover:border-border-base focus:border-border-base;
+}
+/*
+.rc-pagination .rc-pagination-prev svg,
+.rc-pagination .rc-pagination-next svg {
+  @apply w-4 h-4 rtl:transform rtl:rotate-180;
+} */
+
+.rc-pagination .rc-pagination-item a {
+  @apply font-body text-sm text-heading;
+}
+
+.rc-pagination .rc-pagination-item:focus a,
+.rc-pagination .rc-pagination-item:hover a {
+  @apply text-accent;
+}
+
+.rc-pagination .rc-pagination-jump-prev button,
+.rc-pagination .rc-pagination-jump-next button {
+  @apply h-8 text-body-dark focus:outline-none focus:ring-1 focus:ring-accent-300;
+}
+
+.rc-pagination .rc-pagination-item.rc-pagination-item-active {
+  @apply border-accent bg-accent text-light;
+}
+
+.rc-pagination .rc-pagination-item.rc-pagination-item-active a {
+  @apply text-light hover:text-light focus:text-light;
+}
+
+.rc-pagination .rc-pagination-options .rc-pagination-options-quick-jumper,
+.rc-pagination.rc-pagination-simple .rc-pagination-simple-pager {
+  @apply flex items-center font-body text-sm text-heading;
+}
+
+.rc-pagination .rc-pagination-options .rc-pagination-options-quick-jumper input,
+.rc-pagination.rc-pagination-simple .rc-pagination-simple-pager input {
+  @apply h-8 border border-border-base bg-gray-50 rounded px-2 font-body text-sm text-heading hover:border-accent focus:border-accent focus:outline-none;
+}
+
+/* RC Table */
+.rc-table {
+  @apply border-separate;
+  border-spacing: 0;
+}
+
+.rc-table .rc-table-content,
+.rc-table .rc-table-body,
+.rc-table .rc-table-header {
+  @apply border-0;
+}
+
+.rc-table tr th,
+.rc-table tr td {
+  @apply font-body border-0 border-b border-border-200;
+}
+
+.rc-table thead.rc-table-thead th {
+  @apply py-3 px-3 font-body text-sm font-semibold text-heading border-border-200 whitespace-nowrap first:ps-4 last:pe-4;
+  background-color: #f7f8f9;
+}
+
+.rc-table tr.rc-table-row:hover {
+  background-color: inherit;
+}
+
+.rc-table tr.rc-table-row td {
+  @apply py-3 px-3 font-body text-sm font-normal text-body first:ps-4 last:pe-4 cursor-default;
+}
+.rc-table tr.rc-table-row td.rc-table-cell-row-hover {
+  @apply bg-gray-100;
+}
+
+.rc-table tr.rc-table-row-level-1 td,
+.rc-table tr.rc-table-row-level-1 td {
+  @apply bg-gray-100;
+}
+
+.rc-table tr.rc-table-row:last-child td {
+  @apply border-b-0;
+}
+
+.rc-table tr.rc-table-expanded-row > td {
+  @apply p-0 whitespace-normal border border-gray-50 bg-gray-200;
+}
+
+.rc-table tr.rc-table-expanded-row tr.rc-table-row {
+  cursor: default;
+}
+
+.rc-table .rc-table-row-expand-icon {
+  @apply inline-flex items-center justify-center;
+}
+
+.rc-table .rc-table-expanded-row-fixed::after {
+  border-width: 0;
+}

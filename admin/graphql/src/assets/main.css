@@ -212,4 +212,5 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @import "./custom-plugins.css";
